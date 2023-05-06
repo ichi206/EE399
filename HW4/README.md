@@ -1,84 +1,57 @@
-# Homework 3: SVD Interpretations and Classifiers
+# Homework 4: Intro to Neural Networks
 
 by Gerald I. Nakata
 
 ## Abstract
 
-Classifiers are the algorithimic approach to identifying certain groups a data point may belong to based on input data. In this assigment different Linear Classifiers were used to categorize MNIST data. The different matrices of Singular Value Decompositon were explored as well to ensure our understanding of what each matrix represents.
+Neural Networks are the basis for modern machine learning, often being used interchangably even though they are not equivalent. In this assignment the feed forward neural network was explored. The structure was used to fit the data from HW1 as well as the MNIST data from HW3. The performance of the FFNN was compared against the previous fits for the HW1 data and the classifiers in HW3 for the MNIST data.
+
 
 ## Section I: Introduction and Overview
 
-This assigment involved the processing of MNIST data using SVD to create a 3D plot representation that showed the liklihood of each digit image data being one of the three digits set as the axes. Linear Decomposition Analysis (LDA) was performed for a classifier between 3 digits, then three different classifiers (LDA, Support Vector Machine (SVM), and Decision Trees (DT)) were utilized to differentiate between two different digit combinations.
+This assignment involved creating a Feed Forward Neural Network (FFNN) for the HW1 data and comparing the fit to the regressions in HW1. This is done with the first 20 data points being training data and the last 10 being testing data, and with the frist 10 being training and the last 10 being testing. The FFNN loss was then compared to the different regressions from HW1. After, an FFNN was made to classify the MNIST digit data and compared to the classifiers explored in HW3.
+
 
 ## Section II: Theoretical Background
 
-SVD is one concept utilized in this assignment which allows for the decomposition of any matrix into three principal parts. From a purely mathmatical perspective, the matrices, U, Sigma, and V.t, are components of a matrix transformation. U is the matrix which contains the eigenvectors of the columns of the input (A*A.t) matrix (as columns) and V.t contains the the input matrix row eigenvectors as rows (for V it would have the row eigenvectors as columns). Sigma is a diagonal matrix containing the eigenvalues corresponding to each eigenvector. Functionally, the matrix U aligns the data so that the eigenvectors are on top of the axes, the Sigma matrix scales the data, and the V.t matrix rotates the data back from eigenspace into 'real space'.
+FFNNs are the simplest type of neural networks since the flow of data is rather straightforward as the name suggests. The data is fed into an input layer which changes the data dimensions to match the first hidden layer, then keeps transforming the data until it reaches the output layer. The loss/error is then calculated, then backpropagation is utilized to modify the weights of the neural network and 'step' towards a lower loss/error.
 
-The different types of classifiers used in this assignment are LDA, SVM, and DTs.
+While neural networks take little organized data to implement, they have a proclivity to overfit the data and require hyperparameter tuning as well as other methods to prevent such from happening.
 
-Linear Discriminant Analysis, LDA, attempts to reduce the dimensionality of data to maximize the separation in the end classification and is rather similar to the way SVD functions.
-
-Support Vector Machines, SVMs, seeks hyperplanes that optimally split data into different groups based on what the label is. This can include some complex functions for the hyperplane to separate complex data.
-
-Decision Trees, DTs, are the last method explored in this assignment. Functionally, lines are progressively drawn to separate groups further towards a complete split. While this is similar to SVMs, the split is more simple, but cannot handle as complex of data as easily as SVMs.
 
 ## Section III: Algorithm Implementation and Development
 
-A few new modules were utilized in this assigment, including sklearn's train_test_split to separate MNIST data into training and test sets (note that all of the data was split with 80% for training and 20% for testing), accuracy_score and classification_report to see how different classifiers performed, LogisticRegression was used to model the LDA classifier, SVC for the SVMs, and DecisionTreeClassifier for the decision trees. A few issues were encountered whilst programming for this assignment, notable, when creating the nested for loops, an error that only one class was being used for the target data set. The issue was eventually found to be that when using the nested for loops there was no check to see if the two digits being compared were the same digit, so a check had to be added to mitigate the issue. This issue was fixed by adding print statements for which numbers were being compared, and an error message that ChatGPT recommended as an internal catch for if the same digit was passed to the functions.
+The main new module used in this assignment was pytorch, including a few submodules. The torch.nn module allowed the streamlined creation of the neural network architecture and torch.optim simplified the application of backpropagation. The first FFNN was created to fit the data from HW1 so the input size and output sizes were 1 since it was a function. The hidden layer dimensions were both arbitrarily set to 10 for a total of 3 layers. The FFNN was rather simple with each layer feeding directly into each other without any activation functions between them. The two fits were then conducted, first with 20 training points, then with 10. The input and output data both needed to be reshaped to ensure that the matrix multiplication worked properly when inputted into the FFNN.
+
+A different FFNN was then constructed for the classifying the MNIST data, this time using a Softmax activation at the end. This produces a probability distribution for each of the potential output classes, which is perfect for a classifier. 
+
 
 ## Section IV: Computational Results
 
-The SVD of the digit images was completed and the singular value spectrum was found to have size (784,). This should be a diagonal matrix of these values to be functionally used as part of the SVD. It was also found that around 100 modes created a relatively clear image reconstruction. Fewer could be used but it would blur the edges of the digit.
+Problem 1 of the homework applied the FFNN to the dat from HW1 using the last 10 data points as a test set and the first 20 and 10 as training sets. The FFNN results for the 20 train and 10 test sets are shown below:
 
-![image](https://user-images.githubusercontent.com/6571263/234189159-5befafaf-75d0-46c0-8a3e-1e7eb1b6431e.png)
+![image](https://user-images.githubusercontent.com/6571263/236603637-ccb77481-421e-4413-8549-6d6315150deb.png)
 
-For the interpretations of the SVD matrices, the U matrix can be seen as the relationship between each input image pixel to the overall pattern of the image, while the Sigma matrix is the scaling factor that shows how prominent these pixel patterns are relative to each other. The V matrix (transpose of V.t component) represents the relation of each of the images to the pixel data weight based on pattern, which has a transpose that can be used as the last step in reconstructing the images.
+And the 10 train and 10 test are the following:
 
-The last of the SVD work was the 3D plot of 3 V-modes colored based on digit label, in this case modes 2, 3, and 5.
+![image](https://user-images.githubusercontent.com/6571263/236603944-d4c9b4af-70e1-436b-8411-0a329a3966db.png)
 
-![image](https://user-images.githubusercontent.com/6571263/234190404-d02e6cf5-10bc-49f7-9928-1c74c47af57b.png)
+This showed that both FFNN fits to the HW1 data performed worse than even the worst HW1 regression, the 19th degree polynomial with 10 training points.
 
-The next section was classifiers. The two digit classifier data will be shown later since it was run to compare each digit combination.
-For the three digit classifier (using LDA), the results are as shown below.
+![image](https://user-images.githubusercontent.com/6571263/236604679-65f05fac-5c54-4335-b76f-2f9d7fb86e77.png)
 
-![image](https://user-images.githubusercontent.com/6571263/234190801-1c361c81-100f-4cb1-a067-eeedda0d2814.png)
+This can likely be attributed to overfitting the data and a lack of hyperparameter tuning to find optimal results.
 
-To find which two digits were the most easy and two most difficult to separate each digit combination was run and the accuracy of the models were compared.
+The second part of the assignment started with calculating the first 20 PCA modes which are as printed out along with their associated variance.
 
-![image](https://user-images.githubusercontent.com/6571263/234191507-ce25b8c3-76f4-4d19-b323-9706f0eff4da.png)
-![image](https://user-images.githubusercontent.com/6571263/234191584-f7d2db8c-163a-44d5-a1a9-f12024a38968.png)
-![image](https://user-images.githubusercontent.com/6571263/234191650-ece3b209-4ce0-4a1e-bbed-719c176fc710.png)
-![image](https://user-images.githubusercontent.com/6571263/234191728-91c34fb7-4052-45b2-85d5-560fc3233d87.png)
-![image](https://user-images.githubusercontent.com/6571263/234191800-53e762aa-9399-4e12-b85f-ba3263851efc.png)
-![image](https://user-images.githubusercontent.com/6571263/234191892-6c357ff0-bcc6-420d-a6be-9d1aa17912cf.png)
-![image](https://user-images.githubusercontent.com/6571263/234191962-467375ad-032e-4748-be65-3daf5cc7643d.png)
-![image](https://user-images.githubusercontent.com/6571263/234192013-6ea52bd3-72ff-4a9c-a99b-234ba979da9c.png)
-![image](https://user-images.githubusercontent.com/6571263/234192107-edef0b67-7b9c-4ccf-9df9-178cb439502d.png)
-![image](https://user-images.githubusercontent.com/6571263/234192236-c1d84117-1063-4480-9b1b-20ce1cd493f1.png)
+![image](https://user-images.githubusercontent.com/6571263/236605862-07c176a4-5a13-49b3-8217-bd2b6f450b4f.png)
 
-The highest classifier accuracy was determined as the most easy to separate digits, in this case 6 and 7.
-Classifier accuracy between digit 6 and 7 : 0.9996471418489767
+The next section was using the FFNN architecture to create a classifier for the MNIST data used in HW3 which had the following accuracy:
 
-Likewise, the lowest classifier accuracy was determined to be the most difficult to separate digits, in this case 3 and 5.
-Classifier accuracy between digit 3 and 5 : 0.9516908212560387
+![image](https://user-images.githubusercontent.com/6571263/236605923-d3297ad7-00e7-40cb-9d0a-27abf9af64ac.png)
 
-For the last section SVMs, LDAs, and DTs are compared against each other as classifiers. They all perform rather comparable to each other, with some doing better at classifying some digit combinations than others. Unfortunately, at the SVM comparing 2 and 3, so I can only show data up to that point.
-
-![image](https://user-images.githubusercontent.com/6571263/234193703-209319c7-188d-4a4a-88df-7e533e55ab66.png)
-![image](https://user-images.githubusercontent.com/6571263/234193786-af077260-a1f7-4206-a5bd-be7e8693eba1.png)
-![image](https://user-images.githubusercontent.com/6571263/234193861-10379fba-5721-48bc-9993-e6377deba3f7.png)
-![image](https://user-images.githubusercontent.com/6571263/234194032-aeb4355d-8570-47de-b072-c71f6dbf2060.png)
-
-Based solely on this data:
-
-SVMs performent the worst at separating 1 and 8, and best at separating 0 and 1
-SVM Classifier accuracy between digit 1 and 8 : 0.9785787147228834
-SVM Classifier accuracy between digit 0 and 1 : 0.9996617050067659
-
-Decision trees performed the worst at separating 0 and 6, and best at separating 0 and 1
-Decision Tree Classifier accuracy between digit 0 and 6 : 0.9782293178519593
-Decision Tree Classifier accuracy between digit 0 and 1 : 0.9979702300405954
+Compared to the LSTM, SVM, and decision tree classifiers in HW3 the FFNN performed worse than all of them at 93.20% accuracy.
 
 ## Section V: Summary and Conclusions
 
-This assignment explored the understanding behind SVD as well as three different types of classifiers that can be utilized for supervised machine learning along with their associated Python libraries. This was also the first time utilizing data split for cross validation in an assignment thus far, and is an important part of ensuring the integrity of the models produced. 
+This assignment introduced the neural network in the form of the FFNN and allowed us to experiment with it. While the neural network is very powerful, this particular assignment demonstrated its proclivity for overfitting data. While hyperparameter tuning can reduce the loss/error, there are other methods which can help, including data dropout, which will likely be explored at a later date.
