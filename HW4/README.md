@@ -50,6 +50,10 @@ The next section was using the FFNN architecture to create a classifier for the 
 
 ![image](https://user-images.githubusercontent.com/6571263/236605923-d3297ad7-00e7-40cb-9d0a-27abf9af64ac.png)
 
+The LSTM had pretty good performance at over 98% accuracy.
+
+![image](https://user-images.githubusercontent.com/6571263/237001106-db17dbd8-52c9-4cd3-8363-ce9d4dcb3c0c.png)
+
 Compared to the LSTM, SVM, and decision tree classifiers in HW3 the FFNN performed worse than all of them at 93.20% accuracy.
 
 ## Section V: Summary and Conclusions
