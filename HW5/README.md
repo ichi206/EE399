@@ -1,84 +1,86 @@
-# Homework 3: SVD Interpretations and Classifiers
+# Homework 5: Comparing Different Neural Networks by Predicting Lorenz Equation
 
 by Gerald I. Nakata
 
 ## Abstract
 
-Classifiers are the algorithimic approach to identifying certain groups a data point may belong to based on input data. In this assigment different Linear Classifiers were used to categorize MNIST data. The different matrices of Singular Value Decompositon were explored as well to ensure our understanding of what each matrix represents.
+As stated in the previous homework, neural networks are the the basis of modern machine learning. In this assignment different types of neural network architecture are used to make predictions on future values of the Lorenz function.
 
 ## Section I: Introduction and Overview
 
-This assigment involved the processing of MNIST data using SVD to create a 3D plot representation that showed the liklihood of each digit image data being one of the three digits set as the axes. Linear Decomposition Analysis (LDA) was performed for a classifier between 3 digits, then three different classifiers (LDA, Support Vector Machine (SVM), and Decision Trees (DT)) were utilized to differentiate between two different digit combinations.
+This assignment involved creating a feed-forward neural network (FFNN), a long short-term memory neural network (LSTM), a recurrent neural network (RNN), and an echo state network (ESN) to make predictions on the future states of a lorenz function. The networks were trained at predictions p = 10, 28, and 40 and then tested at p = 17 and 35.
 
 ## Section II: Theoretical Background
 
-SVD is one concept utilized in this assignment which allows for the decomposition of any matrix into three principal parts. From a purely mathmatical perspective, the matrices, U, Sigma, and V.t, are components of a matrix transformation. U is the matrix which contains the eigenvectors of the columns of the input (A*A.t) matrix (as columns) and V.t contains the the input matrix row eigenvectors as rows (for V it would have the row eigenvectors as columns). Sigma is a diagonal matrix containing the eigenvalues corresponding to each eigenvector. Functionally, the matrix U aligns the data so that the eigenvectors are on top of the axes, the Sigma matrix scales the data, and the V.t matrix rotates the data back from eigenspace into 'real space'.
+The different types of neural networks explored in this assignment were listed in Section I and will be further explained here with the exception of FFNNs which were explained in HW4.
 
-The different types of classifiers used in this assignment are LDA, SVM, and DTs.
+Long short-term neural networks (LSTMs) are a type of RNN that have units composed of input gates, output gates, and forget gates which allow for information to be temporarily stored for better learning data.
 
-Linear Discriminant Analysis, LDA, attempts to reduce the dimensionality of data to maximize the separation in the end classification and is rather similar to the way SVD functions.
+Recurrent neural networks (RNNs) are a type of neural network that can have nodes connected in loops to allow for node weights to impact past nodes. This framework is good for predictive modeling of functions.
 
-Support Vector Machines, SVMs, seeks hyperplanes that optimally split data into different groups based on what the label is. This can include some complex functions for the hyperplane to separate complex data.
-
-Decision Trees, DTs, are the last method explored in this assignment. Functionally, lines are progressively drawn to separate groups further towards a complete split. While this is similar to SVMs, the split is more simple, but cannot handle as complex of data as easily as SVMs.
+Echo state networks (ESNs) are another type of RNN that have a 'reservoir' of neurons which have connections and weights randomly assigned and the only weights modified are the ones connecting hidden neurons to outputs.
 
 ## Section III: Algorithm Implementation and Development
 
-A few new modules were utilized in this assigment, including sklearn's train_test_split to separate MNIST data into training and test sets (note that all of the data was split with 80% for training and 20% for testing), accuracy_score and classification_report to see how different classifiers performed, LogisticRegression was used to model the LDA classifier, SVC for the SVMs, and DecisionTreeClassifier for the decision trees. A few issues were encountered whilst programming for this assignment, notable, when creating the nested for loops, an error that only one class was being used for the target data set. The issue was eventually found to be that when using the nested for loops there was no check to see if the two digits being compared were the same digit, so a check had to be added to mitigate the issue. This issue was fixed by adding print statements for which numbers were being compared, and an error message that ChatGPT recommended as an internal catch for if the same digit was passed to the functions.
+Keras was the main library used in implenting these neural networks with data derived from the given lorenz equation. Each model was fit to training data with values 10, 28, and 40 steps forward and were trained for 50 epochs each. The general format was adapted from HW4 with the input and output dimensions changed, as well as some architecture modifications to change it from a classifier to a predictive model. The ESN was a bit more difficult to implement and chatGPT was used to create the architecture. Each of the models were tested for their accuracy at predicting 17 and 35 steps ahead.
 
 ## Section IV: Computational Results
 
-The SVD of the digit images was completed and the singular value spectrum was found to have size (784,). This should be a diagonal matrix of these values to be functionally used as part of the SVD. It was also found that around 100 modes created a relatively clear image reconstruction. Fewer could be used but it would blur the edges of the digit.
+For the FFNN the accuracy was surprisingly high, possibly due to lucky hyperparameterization.
 
-![image](https://user-images.githubusercontent.com/6571263/234189159-5befafaf-75d0-46c0-8a3e-1e7eb1b6431e.png)
+![image](https://github.com/ichi206/EE399/assets/6571263/054cb985-f9bd-4254-a031-df24281bb696)
 
-For the interpretations of the SVD matrices, the U matrix can be seen as the relationship between each input image pixel to the overall pattern of the image, while the Sigma matrix is the scaling factor that shows how prominent these pixel patterns are relative to each other. The V matrix (transpose of V.t component) represents the relation of each of the images to the pixel data weight based on pattern, which has a transpose that can be used as the last step in reconstructing the images.
+The FFNN function was also plotted onto the given lorenz graph to better see the aberrations from the function.
 
-The last of the SVD work was the 3D plot of 3 V-modes colored based on digit label, in this case modes 2, 3, and 5.
+![image](https://github.com/ichi206/EE399/assets/6571263/ac6b66fc-a2d7-40d6-b6de-7fd3628e60d4)
 
-![image](https://user-images.githubusercontent.com/6571263/234190404-d02e6cf5-10bc-49f7-9928-1c74c47af57b.png)
+Then, the accuracy for the model was tested at 17 and 35 steps ahead.
 
-The next section was classifiers. The two digit classifier data will be shown later since it was run to compare each digit combination.
-For the three digit classifier (using LDA), the results are as shown below.
+![image](https://github.com/ichi206/EE399/assets/6571263/5e62dea7-cc85-40e5-8989-43e7b2280743)
 
-![image](https://user-images.githubusercontent.com/6571263/234190801-1c361c81-100f-4cb1-a067-eeedda0d2814.png)
 
-To find which two digits were the most easy and two most difficult to separate each digit combination was run and the accuracy of the models were compared.
+This was repeated for the LSTM.
 
-![image](https://user-images.githubusercontent.com/6571263/234191507-ce25b8c3-76f4-4d19-b323-9706f0eff4da.png)
-![image](https://user-images.githubusercontent.com/6571263/234191584-f7d2db8c-163a-44d5-a1a9-f12024a38968.png)
-![image](https://user-images.githubusercontent.com/6571263/234191650-ece3b209-4ce0-4a1e-bbed-719c176fc710.png)
-![image](https://user-images.githubusercontent.com/6571263/234191728-91c34fb7-4052-45b2-85d5-560fc3233d87.png)
-![image](https://user-images.githubusercontent.com/6571263/234191800-53e762aa-9399-4e12-b85f-ba3263851efc.png)
-![image](https://user-images.githubusercontent.com/6571263/234191892-6c357ff0-bcc6-420d-a6be-9d1aa17912cf.png)
-![image](https://user-images.githubusercontent.com/6571263/234191962-467375ad-032e-4748-be65-3daf5cc7643d.png)
-![image](https://user-images.githubusercontent.com/6571263/234192013-6ea52bd3-72ff-4a9c-a99b-234ba979da9c.png)
-![image](https://user-images.githubusercontent.com/6571263/234192107-edef0b67-7b9c-4ccf-9df9-178cb439502d.png)
-![image](https://user-images.githubusercontent.com/6571263/234192236-c1d84117-1063-4480-9b1b-20ce1cd493f1.png)
+LSTM, p = 10, 28, and 40
 
-The highest classifier accuracy was determined as the most easy to separate digits, in this case 6 and 7.
-Classifier accuracy between digit 6 and 7 : 0.9996471418489767
+![image](https://github.com/ichi206/EE399/assets/6571263/743e2b4b-e0f6-4a6c-ac6e-78f558bf870d)
 
-Likewise, the lowest classifier accuracy was determined to be the most difficult to separate digits, in this case 3 and 5.
-Classifier accuracy between digit 3 and 5 : 0.9516908212560387
+LSTM Projected over Lorenz
 
-For the last section SVMs, LDAs, and DTs are compared against each other as classifiers. They all perform rather comparable to each other, with some doing better at classifying some digit combinations than others. Unfortunately, at the SVM comparing 2 and 3, so I can only show data up to that point.
+![image](https://github.com/ichi206/EE399/assets/6571263/4dd06b2a-2125-430c-8fac-2aa26d69bf7e)
 
-![image](https://user-images.githubusercontent.com/6571263/234193703-209319c7-188d-4a4a-88df-7e533e55ab66.png)
-![image](https://user-images.githubusercontent.com/6571263/234193786-af077260-a1f7-4206-a5bd-be7e8693eba1.png)
-![image](https://user-images.githubusercontent.com/6571263/234193861-10379fba-5721-48bc-9993-e6377deba3f7.png)
-![image](https://user-images.githubusercontent.com/6571263/234194032-aeb4355d-8570-47de-b072-c71f6dbf2060.png)
+LSTM, p = 17 and 35
 
-Based solely on this data:
+![image](https://github.com/ichi206/EE399/assets/6571263/10d4f6ce-4cc2-4f85-9de9-afc7512ca389)
 
-SVMs performent the worst at separating 1 and 8, and best at separating 0 and 1
-SVM Classifier accuracy between digit 1 and 8 : 0.9785787147228834
-SVM Classifier accuracy between digit 0 and 1 : 0.9996617050067659
+The RNN as well.
 
-Decision trees performed the worst at separating 0 and 6, and best at separating 0 and 1
-Decision Tree Classifier accuracy between digit 0 and 6 : 0.9782293178519593
-Decision Tree Classifier accuracy between digit 0 and 1 : 0.9979702300405954
+RNN, p = 10, 28, and 40
+
+![image](https://github.com/ichi206/EE399/assets/6571263/354a3f1b-ec42-4195-8979-9bc5dece2191)
+
+RNN Projected over Lorenz
+
+![image](https://github.com/ichi206/EE399/assets/6571263/e11dcac2-1472-4111-9769-6e26e75177b7)
+
+RNN, p = 17 and 35
+
+![image](https://github.com/ichi206/EE399/assets/6571263/2b54d00d-6d2f-4e9a-9c13-7d47399f6792)
+
+And finally, the ESN.
+
+ESN, p = 10, 28, and 40
+
+![image](https://github.com/ichi206/EE399/assets/6571263/a574c63a-2fb0-4dfe-a584-87a284702e75)
+
+ESN Projected over Lorenz
+
+![image](https://github.com/ichi206/EE399/assets/6571263/c1fe89e6-54a1-46da-a4fd-91970b6618a5)
+
+ESN, p = 17 and 35
+
+![image](https://github.com/ichi206/EE399/assets/6571263/4a658b9f-1667-44d3-a41a-8cb056cf79cb)
 
 ## Section V: Summary and Conclusions
 
-This assignment explored the understanding behind SVD as well as three different types of classifiers that can be utilized for supervised machine learning along with their associated Python libraries. This was also the first time utilizing data split for cross validation in an assignment thus far, and is an important part of ensuring the integrity of the models produced. 
+This assignment explored several new neural networks and the predictive capabilities of each of the new frameworks. The accuracy for each of the networks were oddly high considering how difficult it should be to predict future data for a function as erratic as lorenz. A causes could be very lucky hyperparameterization, or not using diverse enough of a dataset and thus making the data too easy to fit to.
