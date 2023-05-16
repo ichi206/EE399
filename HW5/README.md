@@ -28,56 +28,62 @@ Keras was the main library used in implenting these neural networks with data de
 
 For the FFNN the accuracy was surprisingly high, possibly due to lucky hyperparameterization.
 
+**FFNN, p = 10, 28, and 40
+
 ![image](https://github.com/ichi206/EE399/assets/6571263/054cb985-f9bd-4254-a031-df24281bb696)
 
 The FFNN function was also plotted onto the given lorenz graph to better see the aberrations from the function.
 
+**FFNN Projected over Lorenz
+
 ![image](https://github.com/ichi206/EE399/assets/6571263/ac6b66fc-a2d7-40d6-b6de-7fd3628e60d4)
 
 Then, the accuracy for the model was tested at 17 and 35 steps ahead.
+
+**FFNN, p = 17 and 35
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/5e62dea7-cc85-40e5-8989-43e7b2280743)
 
 
 This was repeated for the LSTM.
 
-LSTM, p = 10, 28, and 40
+**LSTM, p = 10, 28, and 40
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/743e2b4b-e0f6-4a6c-ac6e-78f558bf870d)
 
-LSTM Projected over Lorenz
+**LSTM Projected over Lorenz
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/4dd06b2a-2125-430c-8fac-2aa26d69bf7e)
 
-LSTM, p = 17 and 35
+**LSTM, p = 17 and 35
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/10d4f6ce-4cc2-4f85-9de9-afc7512ca389)
 
 The RNN as well.
 
-RNN, p = 10, 28, and 40
+**RNN, p = 10, 28, and 40
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/354a3f1b-ec42-4195-8979-9bc5dece2191)
 
-RNN Projected over Lorenz
+**RNN Projected over Lorenz
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/e11dcac2-1472-4111-9769-6e26e75177b7)
 
-RNN, p = 17 and 35
+**RNN, p = 17 and 35
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/2b54d00d-6d2f-4e9a-9c13-7d47399f6792)
 
 And finally, the ESN.
 
-ESN, p = 10, 28, and 40
+**ESN, p = 10, 28, and 40
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/a574c63a-2fb0-4dfe-a584-87a284702e75)
 
-ESN Projected over Lorenz
+**ESN Projected over Lorenz
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/c1fe89e6-54a1-46da-a4fd-91970b6618a5)
 
-ESN, p = 17 and 35
+**ESN, p = 17 and 35
 
 ![image](https://github.com/ichi206/EE399/assets/6571263/4a658b9f-1667-44d3-a41a-8cb056cf79cb)
 
