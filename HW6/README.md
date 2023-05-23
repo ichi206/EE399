@@ -28,15 +28,18 @@ The graphs of the variable plotted against loss of the model are plotted below:
 
 **Time Lag**
 
-image.png
+![image](https://github.com/ichi206/EE399/assets/6571263/f8990a91-4acf-4454-839a-617feb587eb9)
 
 **Gaussian Noise**
 
-
+![image](https://github.com/ichi206/EE399/assets/6571263/d0b9a5e1-bb9b-4fef-a9bd-47a8582c85d9)
 
 **Number of Sensors**
 
+![image](https://github.com/ichi206/EE399/assets/6571263/3b3589c6-fe1d-4ec8-a861-26b4136edb4b)
 
+
+These graphs show a few different things. The increase in time lag increases the loss, likely due to the model not being trained to intake the data. The gaussian noise did not appear to impact the performance, maybe the range is not large enough for the noise to impact the model. Finally, the number of sensors did not appear to have any impact on the model's performance.
 
 ## Section V: Summary and Conclusions
 
